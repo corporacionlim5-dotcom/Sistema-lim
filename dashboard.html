@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard · Gestión de gasolineras</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body data-page="dashboard" data-root="">
+  <div class="app">
+    <!-- Menú lateral y barra superior: los dibuja Shell.render() en app.js -->
+    <aside class="sidebar" id="sidebar" aria-label="Menú principal"></aside>
+
+    <div class="main">
+      <header class="topbar" id="topbar"></header>
+
+      <main class="content is-loading" id="content">
+        <div class="page-head mb-4">
+          <h1>Panel general</h1>
+          <p id="scopeText">Cargando información…</p>
+        </div>
+
+        <!-- Indicadores -->
+        <div class="row g-3 mb-3">
+          <div class="col-6 col-xl-3"><div class="panel kpi k-day"><div class="kpi-label"><span>Ventas del día</span><i class="fa-solid fa-sun"></i></div><div class="kpi-value" id="kVentasDia">—</div><div class="kpi-note" id="kDiaNote">Hoy</div></div></div>
+          <div class="col-6 col-xl-3"><div class="panel kpi k-month"><div class="kpi-label"><span>Ventas del mes</span><i class="fa-solid fa-calendar"></i></div><div class="kpi-value" id="kVentasMes">—</div><div class="kpi-note" id="kMesNote">Mes actual</div></div></div>
+          <div class="col-6 col-xl-3"><div class="panel kpi k-cost"><div class="kpi-label"><span>Gastos del mes</span><i class="fa-solid fa-receipt"></i></div><div class="kpi-value" id="kGastos">—</div><div class="kpi-note">Todas las categorías</div></div></div>
+          <div class="col-6 col-xl-3"><div class="panel kpi k-profit"><div class="kpi-label"><span>Utilidad estimada</span><i class="fa-solid fa-scale-balanced"></i></div><div class="kpi-value" id="kUtilidad">—</div><div class="kpi-note">Ventas menos gastos del mes</div></div></div>
+        </div>
+
+        <!-- Gráficos principales -->
+        <div class="row g-3 mb-3">
+          <div class="col-xl-8">
+            <section class="panel">
+              <div class="panel-head"><h2>Ventas por día</h2><small>Últimos 14 días</small></div>
+              <div class="panel-body"><div class="chart-box"><canvas id="chVentas"></canvas></div></div>
+            </section>
+          </div>
+          <div class="col-xl-4">
+            <section class="panel">
+              <div class="panel-head"><h2 id="distTitle">Ventas del mes por estación</h2></div>
+              <div class="panel-body"><div class="chart-box"><canvas id="chDist"></canvas></div></div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Combustible e inventario -->
+        <div class="row g-3 mb-3">
+          <div class="col-xl-6">
+            <section class="panel">
+              <div class="panel-head"><h2>Combustible vendido</h2><small>Litros del mes</small></div>
+              <div class="panel-body"><div class="chart-box"><canvas id="chFuel"></canvas></div></div>
+            </section>
+          </div>
+          <div class="col-xl-6">
+            <section class="panel">
+              <div class="panel-head"><h2>Resumen de inventario</h2><small>Nivel actual de tanques</small></div>
+              <div class="panel-body" id="tanks"></div>
+            </section>
+          </div>
+        </div>
+
+        <!-- Operaciones y alertas -->
+        <div class="row g-3">
+          <div class="col-xl-8">
+            <section class="panel">
+              <div class="panel-head"><h2>Últimas operaciones</h2></div>
+              <div class="panel-body table-responsive">
+                <table class="table table-x">
+                  <thead><tr><th>Hora</th><th>Estación</th><th>Tipo</th><th>Detalle</th><th class="text-end">Monto</th></tr></thead>
+                  <tbody id="opsBody"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+          <div class="col-xl-4">
+            <section class="panel">
+              <div class="panel-head"><h2>Alertas importantes</h2></div>
+              <div class="panel-body" id="alerts"></div>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <div class="sidebar-backdrop" id="backdrop"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
